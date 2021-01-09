@@ -1,5 +1,7 @@
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 
 class Weight extends StatefulWidget {
   @override
@@ -8,6 +10,25 @@ class Weight extends StatefulWidget {
 
 class _WeightState extends State<Weight> {
   DateTime selectedDate = DateTime.now();
+  String finalDate = '';
+  String peso = '';
+  TextEditingController pesoController = new TextEditingController();
+
+  getCurrentDate(){
+
+    var date = new DateTime.now().toString();
+
+    var dateParse = DateTime.parse(date);
+
+    var formattedDate = "${dateParse.day}-${dateParse.month}-${dateParse.year}";
+
+    setState(() {
+
+      finalDate = formattedDate.toString() ;
+
+    });
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +58,32 @@ class _WeightState extends State<Weight> {
           ),
           Container(
             child: Column(
+              children: [
+                TextField(
+                  onChanged: (newText) { peso = newText; },
+                  controller: pesoController,
+                  obscureText: true,
+                  textAlign: TextAlign.left,
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    hintText: 'PLEASE ENTER YOUR WEIGHT',
+                    hintStyle: TextStyle(color: Colors.grey),
+                  ),
 
+                ),
+                RaisedButton(
+                  onPressed: getCurrentDate,
+                  color: Colors.green,
+                  textColor: Colors.white,
+                  padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                  child: Text('ADD'),
+                ),
+                Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child :
+                    Text("$peso in $finalDate", style: TextStyle(fontSize: 20), textAlign: TextAlign.center,)
+                ),
+              ],
             ),
           ),
         ],
@@ -67,3 +113,4 @@ class _WeightState extends State<Weight> {
     );
   }
 }
+
